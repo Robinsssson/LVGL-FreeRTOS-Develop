@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "mem_manage.h": "c",
+        "vector": "c",
+        "xstring": "c",
+        "xutility": "c"
+    }
+}
