@@ -1,47 +1,50 @@
 #include "page4.h"
-#include "page2.h"
+#include "CJSON/cJSON.h"
+#include "mem_manage.h"
+
 #define DEBUG 0
+#define USING_DEBUG_LABEL 0
 
-extern int prepage;
-
-const char *text_stop = "stop";
-extern const char *text_mode_name_1;
-extern const char *text_mode_name_2;
+const char* text_stop = "stop";
+extern const char* text_mode_name_1;
+extern const char* text_mode_name_2;
 // extern lv_obj_t * main_windows_page2_1;
 
-static lv_style_t style_sub_windows;
-
-uint16_t temperature_initarrary[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-uint16_t water_initarrary[]       = {2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000,
-                                     2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000};
+uint16_t temperature_initarrary[] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+uint16_t water_initarrary[] = { 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000,
+    2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000, 2000 };
 #if DEBUG
 LV_IMG_DECLARE(img_pagebackground1)
 #endif
 
 extern linklist page_list;
 
-static lv_obj_t *label_mode_name;
-static lv_obj_t *btn_stop;
-static lv_obj_t *label_sub_btn;
-static lv_obj_t *label_count;
-static lv_obj_t *sub_windows_temperature;
-static lv_obj_t *sub_windows_water;
-static lv_obj_t *label_temperature;
-static lv_obj_t *label_water;
-static lv_obj_t *btn_backforward;
-static lv_obj_t *label_backforward;
-static lv_obj_t *chart_temperature;
-static lv_obj_t *chart_water;
-static lv_obj_t *sub_windows_water;
-static lv_chart_series_t *temperature;
-static lv_chart_series_t *water;
+static lv_obj_t* label_mode_name;
+static lv_obj_t* btn_stop;
+static lv_obj_t* label_sub_btn;
+static lv_obj_t* label_count;
+static lv_obj_t* sub_windows_temperature;
+static lv_obj_t* sub_windows_water;
+static lv_obj_t* label_temperature;
+static lv_obj_t* label_water;
+static lv_obj_t* btn_backforward;
+static lv_obj_t* label_backforward;
+static lv_obj_t* chart_temperature;
+static lv_obj_t* chart_water;
+static lv_obj_t* sub_windows_water;
+static lv_chart_series_t* temperature;
+static lv_chart_series_t* water;
 
-static void event_btn_backforward(lv_event_t *e)
+static lv_style_t btn_style;
+static lv_style_t btn_stop_style;
+static lv_style_t style_sub_windows;
+
+static void event_btn_backforward(lv_event_t* e)
 {
-    page_callback(page_list, PAGE4_INIT, PAGE1_INIT, LV_SCR_LOAD_ANIM_NONE, true);
+    page_callback(page_list, PAGE4_INIT, PAGE1_INIT, LV_SCR_LOAD_ANIM_NONE);
 }
 
-static void event_btn_stop(lv_event_t *e)
+static void event_btn_stop(lv_event_t* e)
 {
     uint32_t color = lv_color_to32(lv_obj_get_style_bg_color(btn_stop, LV_PART_MAIN));
 
@@ -54,12 +57,26 @@ static void event_btn_stop(lv_event_t *e)
     }
 }
 
-void page4_init(lv_obj_t *root)
+void page4_init(lv_obj_t* root, cJSON** message)
 {
-    // set_this_page(PAGE2_1);
+    PRINT_CJSON("page4", message);
+    static _Bool ok = false;
+    if (ok == false) {
+        lv_style_init(&btn_style);
+        lv_style_init(&btn_stop_style);
+        lv_style_init(&style_sub_windows);
+        ok = true;
+    } else {
+        lv_style_reset(&btn_style);
+        // lv_style_reset(&all_tmp_style);
+        lv_style_reset(&btn_stop_style);
+        lv_style_reset(&style_sub_windows);
+    }
+    lv_style_set_bg_color(&btn_style, lv_color_make(0xd5, 0xb1, 0x7b));
+    lv_style_set_bg_color(&btn_stop_style, lv_color_hex(0xb7191b));
     lv_style_set_bg_color(&style_sub_windows, lv_color_hex(0xe7e9e1));
 #if DEBUG
-    lv_obj_t *img_pagebg1 = lv_img_create(main_windows);
+    lv_obj_t* img_pagebg1 = lv_img_create(main_windows);
     lv_img_set_src(img_pagebg1, &img_pagebackground1);
     lv_img_set_size_mode(img_pagebg1, LV_IMG_SIZE_MODE_REAL);
     lv_img_set_zoom(img_pagebg1, 40);
@@ -68,14 +85,12 @@ void page4_init(lv_obj_t *root)
 #endif
 
     label_mode_name = lv_label_create(root);
-    if (prepage == 1) {
+    if (cJSON_GetObjectItem(*message, "page2"))
         lv_label_set_text(label_mode_name, text_mode_name_1);
-    } else if (prepage == 2) {
+    else if (cJSON_GetObjectItem(*message, "page3"))
         lv_label_set_text(label_mode_name, text_mode_name_2);
-    } else {
+    else
         lv_label_set_text(label_mode_name, "Error!");
-    }
-
     lv_obj_align_to(label_mode_name, root, LV_ALIGN_TOP_MID, 0, 20);
 
     btn_stop = lv_btn_create(root);
@@ -122,8 +137,8 @@ void page4_init(lv_obj_t *root)
 
     btn_backforward = lv_btn_create(root);
     lv_obj_align_to(btn_backforward, root, LV_ALIGN_TOP_LEFT, 0, 0);
-    lv_obj_add_style(btn_backforward, btn_start_style(), LV_STATE_DEFAULT);
-    lv_obj_add_event_cb(btn_backforward, event_btn_backforward, LV_EVENT_RELEASED, 0);
+    lv_obj_add_style(btn_backforward, &btn_style, LV_STATE_DEFAULT);
+    lv_obj_add_event_cb(btn_backforward, event_btn_backforward, LV_EVENT_RELEASED, message);
 
     label_backforward = lv_label_create(btn_backforward);
     lv_label_set_text(label_backforward, LV_SYMBOL_LEFT);
@@ -136,7 +151,7 @@ void page4_init(lv_obj_t *root)
     lv_chart_set_point_count(chart_temperature, 20);
     lv_chart_set_update_mode(chart_temperature, LV_CHART_UPDATE_MODE_SHIFT);
     temperature = lv_chart_add_series(chart_temperature, lv_color_hex(0xf5574b), LV_CHART_AXIS_PRIMARY_Y);
-    lv_chart_set_ext_y_array(chart_temperature, temperature, (lv_coord_t *)temperature_initarrary);
+    lv_chart_set_ext_y_array(chart_temperature, temperature, (lv_coord_t*)temperature_initarrary);
 
     chart_water = lv_chart_create(root);
     lv_obj_set_size(chart_water, 320, 210);
@@ -146,5 +161,5 @@ void page4_init(lv_obj_t *root)
     lv_chart_set_update_mode(chart_water, LV_CHART_UPDATE_MODE_SHIFT);
     lv_chart_set_range(chart_water, LV_CHART_AXIS_PRIMARY_Y, 0, 2000);
     water = lv_chart_add_series(chart_water, lv_color_hex(0xf5574b), LV_CHART_AXIS_PRIMARY_Y);
-    lv_chart_set_ext_y_array(chart_water, water, (lv_coord_t *)water_initarrary);
+    lv_chart_set_ext_y_array(chart_water, water, (lv_coord_t*)water_initarrary);
 }

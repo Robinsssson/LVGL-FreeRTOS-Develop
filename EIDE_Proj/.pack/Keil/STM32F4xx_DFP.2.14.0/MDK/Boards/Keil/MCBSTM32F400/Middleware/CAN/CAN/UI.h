@@ -12,7 +12,7 @@
 #include <stdbool.h>
 
 // Global functions exported by UI.c module
-extern bool UI_Initialize (void);
-extern void UI_Thread     (void *arg);
+extern bool UI_Initialize(void);
+extern void UI_Thread(void *arg);
 
 #endif /* __UI_H */

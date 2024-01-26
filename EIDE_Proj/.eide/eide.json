@@ -768,7 +768,17 @@
                     "path": "../MIDDLEWARES/LVGL/GUI_APP/page_main.c"
                   }
                 ],
-                "folders": []
+                "folders": [
+                  {
+                    "name": "CJSON",
+                    "files": [
+                      {
+                        "path": "../MIDDLEWARES/LVGL/GUI_APP/CJSON/cJSON.c"
+                      }
+                    ],
+                    "folders": []
+                  }
+                ]
               }
             ]
           }

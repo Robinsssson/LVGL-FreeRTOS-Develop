@@ -6,6 +6,5 @@
 #include "page3.h"
 #include "page3_1.h"
 #include "page4.h"
-int prepage;
 
 #endif //!__PAGE__H__

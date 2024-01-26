@@ -9,13 +9,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-enum {BACKSPACE = 0x08,
-      LF        = 0x0A,
-      CR        = 0x0D,
-      CNTLQ     = 0x11,
-      CNTLS     = 0x13,
-      ESC       = 0x1B,
-      DEL       = 0x7F };
+enum {
+    BACKSPACE = 0x08,
+    LF        = 0x0A,
+    CR        = 0x0D,
+    CNTLQ     = 0x11,
+    CNTLS     = 0x13,
+    ESC       = 0x1B,
+    DEL       = 0x7F
+};
 
 /* External functions */
-extern bool getline  (char *buf, int32_t bufsz);
+extern bool getline(char *buf, int32_t bufsz);

@@ -39,20 +39,20 @@
 #define __GLCD_CONFIG_H
 /*---------------------- Graphic LCD orientation configuration ---------------*/
 #ifndef GLCD_LANDSCAPE
-#define GLCD_LANDSCAPE  0
+#define GLCD_LANDSCAPE 0
 #endif
 
 /*---------------------- Graphic LCD physical definitions --------------------*/
-#define GLCD_SIZE_X     480             /* Screen size X (in pixels) */
-#define GLCD_SIZE_Y     800             /* Screen size Y (in pixels) */
-#define GLCD_BPP        32              /* Bits per pixel            */
+#define GLCD_SIZE_X 480 /* Screen size X (in pixels) */
+#define GLCD_SIZE_Y 800 /* Screen size Y (in pixels) */
+#define GLCD_BPP    32  /* Bits per pixel            */
 
-#if    (GLCD_LANDSCAPE == 0)
-#define GLCD_WIDTH      GLCD_SIZE_X     /* Screen Width  (in pixels) */
-#define GLCD_HEIGHT     GLCD_SIZE_Y     /* Screen Height (in pixels) */
+#if (GLCD_LANDSCAPE == 0)
+#define GLCD_WIDTH  GLCD_SIZE_X /* Screen Width  (in pixels) */
+#define GLCD_HEIGHT GLCD_SIZE_Y /* Screen Height (in pixels) */
 #else
-#define GLCD_WIDTH      GLCD_SIZE_Y     /* Screen Width  (in pixels) */
-#define GLCD_HEIGHT     GLCD_SIZE_X     /* Screen Height (in pixels) */
+#define GLCD_WIDTH  GLCD_SIZE_Y /* Screen Width  (in pixels) */
+#define GLCD_HEIGHT GLCD_SIZE_X /* Screen Height (in pixels) */
 #endif
 
 /*---------------------- Graphic LCD color definitions -----------------------*/
@@ -61,21 +61,21 @@
 */
 
 /* GLCD color definitions                            */
-#define GLCD_COLOR_BLACK        LCD_COLOR_BLACK
-#define GLCD_COLOR_NAVY         0xFF000080
-#define GLCD_COLOR_DARK_GREEN   LCD_COLOR_DARKGREEN
-#define GLCD_COLOR_DARK_CYAN    LCD_COLOR_DARKCYAN
-#define GLCD_COLOR_MAROON       0xFF800000
-#define GLCD_COLOR_PURPLE       0xFF800080
-#define GLCD_COLOR_OLIVE        0xFF808000
-#define GLCD_COLOR_LIGHT_GREY   LCD_COLOR_LIGHTGRAY
-#define GLCD_COLOR_DARK_GREY    LCD_COLOR_DARKGRAY
-#define GLCD_COLOR_BLUE         LCD_COLOR_BLUE
-#define GLCD_COLOR_GREEN        LCD_COLOR_GREEN
-#define GLCD_COLOR_CYAN         LCD_COLOR_CYAN
-#define GLCD_COLOR_RED          LCD_COLOR_RED
-#define GLCD_COLOR_MAGENTA      LCD_COLOR_MAGENTA
-#define GLCD_COLOR_YELLOW       LCD_COLOR_YELLOW
-#define GLCD_COLOR_WHITE        LCD_COLOR_WHITE
+#define GLCD_COLOR_BLACK      LCD_COLOR_BLACK
+#define GLCD_COLOR_NAVY       0xFF000080
+#define GLCD_COLOR_DARK_GREEN LCD_COLOR_DARKGREEN
+#define GLCD_COLOR_DARK_CYAN  LCD_COLOR_DARKCYAN
+#define GLCD_COLOR_MAROON     0xFF800000
+#define GLCD_COLOR_PURPLE     0xFF800080
+#define GLCD_COLOR_OLIVE      0xFF808000
+#define GLCD_COLOR_LIGHT_GREY LCD_COLOR_LIGHTGRAY
+#define GLCD_COLOR_DARK_GREY  LCD_COLOR_DARKGRAY
+#define GLCD_COLOR_BLUE       LCD_COLOR_BLUE
+#define GLCD_COLOR_GREEN      LCD_COLOR_GREEN
+#define GLCD_COLOR_CYAN       LCD_COLOR_CYAN
+#define GLCD_COLOR_RED        LCD_COLOR_RED
+#define GLCD_COLOR_MAGENTA    LCD_COLOR_MAGENTA
+#define GLCD_COLOR_YELLOW     LCD_COLOR_YELLOW
+#define GLCD_COLOR_WHITE      LCD_COLOR_WHITE
 
 #endif /* __GLCD_CONFIG_H */

@@ -4,14 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "lvgl.h"
-typedef void (*page_init_handle)(lv_obj_t *);
+#include "CJSON/cJSON.h"
+typedef void (*page_init_handle)(lv_obj_t *, cJSON **);
 void page_init_handle_null(lv_obj_t *root);
 typedef struct
 {
     uint8_t page_id;
     lv_obj_t *root;
     page_init_handle init_handler; // 页面中所有组件的初始化函数,以root为父对象
-    
+    cJSON* message;
 } PageStruct_t;
 
 typedef PageStruct_t *data_t;
@@ -20,7 +21,7 @@ typedef struct node {
     struct node *next;
 } listnode, *linklist;
 
-linklist list_create();
+linklist list_create(void);
 int list_push_back(linklist H, data_t value); // head node.
 linklist list_createfrom_array(data_t *array, int len);
 int list_insert(linklist H, data_t value, int pos);

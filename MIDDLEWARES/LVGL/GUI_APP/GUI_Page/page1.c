@@ -1,35 +1,40 @@
 #include "page1.h"
+#include "CJSON/cJSON.h"
+#include "mem_manage.h"
+#include <string.h>
+
 extern linklist page_list;
-static lv_obj_t *page1_btn_normal_mode;
-static lv_obj_t *page1_btn_fry_mode;
-static lv_obj_t *page1_btn_progress_mode;
-static lv_obj_t *label;
-static lv_obj_t *label1;
-static lv_obj_t *label2;
-static lv_obj_t *label3;
+static lv_obj_t* page1_btn_normal_mode;
+static lv_obj_t* page1_btn_fry_mode;
+static lv_obj_t* page1_btn_progress_mode;
+static lv_obj_t* label;
+static lv_obj_t* label1;
+static lv_obj_t* label2;
+static lv_obj_t* label3;
+
 static lv_style_t style_obj;
-
-static void btn_press_1(lv_event_t *e)
+static void btn_press_1(lv_event_t* e)
 {
-    page_callback(page_list, PAGE1_INIT, PAGE2_INIT, LV_SCR_LOAD_ANIM_NONE, true);
-    // linklist page_next = page_find(page_list, PAGE2_INIT);
-    // linklist page_this = page_find(page_list, PAGE1_INIT);
-    // page_create(page_list, PAGE2_INIT);
-    // // page_next->data->init_handler(page_next->data->root);
-
-    // // lv_obj_clean(page_this->data->root);
-    // lv_scr_load(page_next->data->root);
-    // // page_this->data->root = NULL;
+    // cJSON* temp_json = (cJSON*)lv_event_get_user_data(e);
+    page_callback(page_list, PAGE1_INIT, PAGE2_INIT, LV_SCR_LOAD_ANIM_NONE);
 }
 
-static void btn_press_2(lv_event_t *e)
+static void btn_press_2(lv_event_t* e)
 {
-    page_callback(page_list, PAGE1_INIT, PAGE3_INIT, LV_SCR_LOAD_ANIM_NONE, true);
+    // cJSON* temp_json = (cJSON*)lv_event_get_user_data(e);
+    page_callback(page_list, PAGE1_INIT, PAGE3_INIT, LV_SCR_LOAD_ANIM_NONE);
 }
 
-void page1_init(lv_obj_t *root)
+void page1_init(lv_obj_t* root, cJSON** message)
 {
-    // set_this_page(PAGE1);
+    PRINT_CJSON("page1", message);
+    static _Bool ok = false;
+    if (ok == false) {
+        lv_style_init(&style_obj);
+        ok = true;
+    } else {
+        lv_style_reset(&style_obj);
+    }
     // btn btn1 btn2
     page1_btn_normal_mode = lv_btn_create(root);
     lv_obj_set_size(page1_btn_normal_mode, 242, 68);
