@@ -1,5 +1,5 @@
 #include "page4.h"
-#include "CJSON/cJSON.h"
+#include "cJSON.h"
 #include "mem_manage.h"
 
 #define DEBUG 0

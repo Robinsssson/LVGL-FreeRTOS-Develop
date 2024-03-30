@@ -1,5 +1,5 @@
 #include "page3.h"
-#include "CJSON/cJSON.h"
+#include "cJSON.h"
 #include "src/core/lv_event.h"
 
 static lv_obj_t* sub_windows;

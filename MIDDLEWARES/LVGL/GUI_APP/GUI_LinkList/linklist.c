@@ -1,5 +1,8 @@
 #include "linklist.h"
-
+void *pvPortMalloc( size_t xSize );
+void vPortFree( void *pv );
+#define malloc pvPortMalloc
+#define free vPortFree
 void page_init_handle_null(lv_obj_t *root)
 {
 }
@@ -38,7 +41,7 @@ int list_push_back(linklist H, data_t value)
         return -1;
     }
     p->data = value;
-    p->next = NULL; //?
+    p->next = NULL; 
     // find tail node
     q = H;
     while (q->next != NULL) {

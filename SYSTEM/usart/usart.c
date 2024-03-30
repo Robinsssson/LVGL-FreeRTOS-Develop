@@ -1,5 +1,7 @@
 #include "sys.h"
 #include "usart.h"	
+#include "esp8266_usart.h"
+#include <string.h>
 ////////////////////////////////////////////////////////////////////////////////// 	 
 //如果使用ucos,则包括下面的头文件即可.
 #if SYSTEM_SUPPORT_OS
@@ -66,7 +68,7 @@ u8 USART_RX_BUF[USART_REC_LEN];     //接收缓冲,最大USART_REC_LEN个字节.
 //bit14，	接收到0x0d
 //bit13~0，	接收到的有效字节数目
 u16 USART_RX_STA=0;       //接收状态标记	
-
+#endif
 //初始化IO 串口1 
 //bound:波特率
 void uart_init(u32 bound){
@@ -108,23 +110,31 @@ void uart_init(u32 bound){
 
 	//Usart1 NVIC 配置
 	NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;//串口1中断通道
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=3;//抢占优先级3
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority =3;		//子优先级3
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=4;//抢占优先级3
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority =1;		//子优先级3
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;			//IRQ通道使能
 	NVIC_Init(&NVIC_InitStructure);	//根据指定的参数初始化VIC寄存器、
 
 #endif
 	
 }
-
+#if EN_USART1_RX
+void Usart1_SendToUsart3()
+{
+    if ((USART_RX_STA&0x8000)== 0)
+        return;
+    USART_RX_BUF[USART_RX_STA&0X3FFF] = '\0';
+    Usart3_SendATCmd("%s\r\n", 10, USART_RX_BUF);
+    USART_RX_STA = 0;
+}
 
 void USART1_IRQHandler(void)                	//串口1中断服务程序
 {
 	u8 Res;
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
 	{
-		Res =USART_ReceiveData(USART1);//(USART1->DR);	//读取接收到的数据
-		
+		Res = USART_ReceiveData(USART1);//(USART1->DR);	//读取接收到的数据
+		//1100
 		if((USART_RX_STA&0x8000)==0)//接收未完成
 		{
 			if(USART_RX_STA&0x4000)//接收到了0x0d
@@ -133,7 +143,7 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 				else USART_RX_STA|=0x8000;	//接收完成了 
 			}
 			else //还没收到0X0D
-			{	
+			{	//0100
 				if(Res==0x0d)USART_RX_STA|=0x4000;
 				else
 				{

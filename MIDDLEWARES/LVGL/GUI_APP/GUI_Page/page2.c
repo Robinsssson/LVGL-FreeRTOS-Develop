@@ -1,5 +1,5 @@
 #include "page2.h"
-#include "CJSON/cJSON.h"
+#include "cJSON.h"
 #include "mem_manage.h"
 #include <stdlib.h>
 

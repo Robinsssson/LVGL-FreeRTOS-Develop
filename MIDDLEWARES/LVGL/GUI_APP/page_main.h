@@ -6,7 +6,6 @@
 #include "GUI_Page/page.h"
 #include "lvgl.h"
 
-
 void GUI_Init(void);
 
 #endif //!__PAGE_MAIN__H__

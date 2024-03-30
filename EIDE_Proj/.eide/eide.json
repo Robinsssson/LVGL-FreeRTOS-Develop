@@ -91,6 +91,12 @@
             "path": "../HARDWARE/24CXX/24cxx.c"
           },
           {
+            "path": "../HARDWARE/ESP8266/esp8266_usart.c"
+          },
+          {
+            "path": "../HARDWARE/ESP8266/usart_inline.c"
+          },
+          {
             "path": "../HARDWARE/IIC/myiic.c"
           },
           {
@@ -747,6 +753,9 @@
                     "path": "../MIDDLEWARES/LVGL/GUI_APP/GUI_Page/img_pagebackground1.c"
                   },
                   {
+                    "path": "../MIDDLEWARES/LVGL/GUI_APP/GUI_Page/page_setting.c"
+                  },
+                  {
                     "path": "../MIDDLEWARES/LVGL/GUI_APP/GUI_Page/page0.c"
                   },
                   {
@@ -867,7 +876,7 @@
               "id": 1,
               "mem": {
                 "startAddr": "0x20000000",
-                "size": "0x50000"
+                "size": "0x20000"
               },
               "isChecked": true,
               "noInit": false
@@ -949,7 +958,9 @@
           "../MIDDLEWARES/LVGL/GUI_APP",
           "../MIDDLEWARES/LVGL/GUI_APP/GUI_Manage",
           "../MIDDLEWARES/LVGL/GUI_APP/GUI_LinkList",
-          "../MIDDLEWARES/LVGL/GUI_APP/GUI_Page"
+          "../MIDDLEWARES/LVGL/GUI_APP/GUI_Page",
+          "../MIDDLEWARES/LVGL/GUI_APP/CJSON",
+          "../HARDWARE/ESP8266"
         ],
         "libList": [
           "../MIDDLEWARES/LVGL/GUI_APP/GUI_Manage"

@@ -1,5 +1,4 @@
 #include "mem_manage.h"
-#include <inttypes.h>
 #include <stdlib.h>
 #define DEMO_PANEL_WIDTH 800
 #define DEMO_PANEL_HEIGHT 480
@@ -44,7 +43,7 @@ PageStruct_t* page_create(linklist H, uint8_t id, cJSON** mesg)
             page->message = NULL;
         else
             page->message = *mesg;
-        lv_obj_set_size(page->root, DEMO_PANEL_WIDTH, DEMO_PANEL_HEIGHT);
+        // lv_obj_set_size(page->root, DEMO_PANEL_WIDTH, DEMO_PANEL_HEIGHT);
     }
 
     return page;

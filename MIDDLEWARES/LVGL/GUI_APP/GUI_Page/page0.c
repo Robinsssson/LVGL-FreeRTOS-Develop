@@ -1,5 +1,5 @@
 #include "page0.h"
-#include "CJSON/cJSON.h"
+#include "cJSON.h"
 #include "mem_manage.h"
 #include "src/misc/lv_style.h"
 #include <stdbool.h>
@@ -47,8 +47,11 @@ void page0_init(lv_obj_t* root, cJSON** message)
         lv_style_reset(&style_indic);
     }
     cJSON* newjson = cJSON_CreateObject();
+    char* strs =  cJSON_Print(newjson);
+
     cJSON_AddStringToObject(newjson, "page0", "Init");
-    *message = newjson;
+    page_find(page_list, PAGE0_INIT)->data->message = newjson;
+    PRINT_CJSON("page0", &newjson);
     lv_style_set_border_color(&style_bg, lv_color_make(0xd5, 0xb1, 0x7b));
     lv_style_set_border_width(&style_bg, 5);
     lv_style_set_pad_all(&style_bg, 12); /*To make the indicator smaller*/

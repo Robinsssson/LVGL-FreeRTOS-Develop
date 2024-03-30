@@ -6,4 +6,5 @@
 
 void page4_init(lv_obj_t* root, cJSON** message);
 
+
 #endif //!__PAGE4__H__
